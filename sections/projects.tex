@@ -1,0 +1,26 @@
+\sectionTitle{Projects}{\faLaptop}
+\begin{projects}
+    \project
+    {Personal Website}{2019 - Current}
+    {\website{https://secrist.dev}{secrist.dev}\github{kevin-secrist/secrist.dev}}
+    {Personal website/blog where I post things I've learned. Designed to be low maintenance and low cost without losing high availability, performance, or security. Deployed automatically from GitHub via Azure DevOps.}
+    {Jekyll, CloudFlare Workers, Azure Storage, Azure DevOps}
+
+    \project
+    {Chesterfield County Police Active Call Monitor}{2019}
+    {}
+    {Azure Function App which periodically checks for active dispatch calls for Police events in Chesterfield County. Sends alerts via SMS to subscribed users based on location of dispatch. Also designed for low maintenance and low cost - an excellent use case for FaaS.}
+    {Azure Functions,Twilio,Azure Storage}
+
+    \project
+    {This Document}{2020}
+    {\website{https://\resumeurl}{\resumeurl}\github{kevin-secrist/resume}}
+    {Source controlled open-source resume.}%Includes CI/CD pipeline for deployment to personal website.}
+    {\LaTeX,Docker}
+
+    \project
+    {Homelab}{2020}
+    {}
+    {Home lab environment for exploring virtualization, containers, networking, and software development. Examples of self-hosted services include UniFi Controller, Overleaf (online \LaTeX editor), and Plex. HTTP services proxied through Traefik with TLS encryption for security.}
+    {Proxmox, Docker, Docker Compose, Traefik, Let's Encrypt}
+\end{projects}

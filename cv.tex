@@ -1,0 +1,35 @@
+% !TEX TS-program = luatex
+
+\documentclass[localFont,alternative,compact]{yaac-another-awesome-cv}
+\selectlanguage{english}
+
+\newcommand{\resumeurl}{secrist.dev/about/resume}
+
+\name{Kevin}{Secrist}
+\tagline{Senior Backend Software Developer}
+\photo{2.5cm}{assets/profile}
+\socialinfo{
+    \linkedin{kevin-secrist}
+    \github{kevin-secrist}
+    \stackoverflow{6950124}{kevin-secrist}
+    \smartphone{(804) 452-7258}
+    \email{kevin@secrist.dev}\\
+    \address{Midlothian, Virginia}\\
+    \infos{View latest version at \link{https://\resumeurl}{\resumeurl}}
+}
+
+\begin{document}
+    \makecvheader
+    \makecvfooter
+        {\textsc{\today}}
+        {\textsc{Kevin Secrist - CV}}
+        {\thepage}
+    \input{sections/headline}
+    \input{sections/competencies}
+    \input{sections/experience}
+    \input{sections/education}
+    \input{sections/strengths}
+    \clearpage % pushes project section onto next page
+    \input{sections/projects}
+    \input{sections/interests}
+\end{document}
