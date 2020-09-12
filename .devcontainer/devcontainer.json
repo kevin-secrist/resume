@@ -1,0 +1,11 @@
+{
+    "name": "latex-build",
+    "extensions": [
+        "james-yu.latex-workshop"
+    ],
+    "dockerFile": "../Dockerfile",
+    "context": "..",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/data,type=bind,consistency=cached",
+    "workspaceFolder": "/data",
+    "runArgs": [ ]
+}
