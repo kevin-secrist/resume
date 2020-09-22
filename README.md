@@ -1,8 +1,8 @@
+# Professional Resume
+
 ![Built with LaTeX](https://img.shields.io/static/v1?label=Built%20With&message=LaTeX&color=008080&style=for-the-badge&logo=latex)
 <!--![GitHub release (latest by date)](https://img.shields.io/github/v/release/kevin-secrist/resume?style=for-the-badge)-->
 <!-- ![GitHub Release Date](https://img.shields.io/github/release-date/kevin-secrist/resume?style=for-the-badge) -->
-
-# Professional Resume
 
 This project started as a proof of concept to compare templates for Microsoft Word and LaTeX templates. In the past when I have used LaTeX I was always very satisfied with the result, and I think the additional benefits of source control and CI/CD made this option very compelling.
 
