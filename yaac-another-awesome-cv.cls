@@ -177,7 +177,7 @@
 \setlength{\fulllength}{17.3cm}
 
 \newlength{\leftcolumnlength}
-\setlength{\leftcolumnlength}{2cm}
+\setlength{\leftcolumnlength}{2.4cm}
 
 \newlength{\rightcolumnlength}
 %\setlength{\rightcolumnlength}{15.3cm minus 1cm}
