@@ -14,11 +14,18 @@ Instead, for this project you only need to install a few things:
 
 * Docker for Windows or Linux
 * VS Code
-* Visual Studio Code Remote - Containers Extension
+* Visual Studio Code Remote - Containers Extension (optional)
 
 That's basically it. There's more detailed documentation about using [remote containers within VS Code](https://code.visualstudio.com/docs/remote/containers) that may be helpful for setup. Once everything is installed, VS Code can build a Docker image and run a container locally based on the [`Dockerfile`](Dockerfile) and [`devcontainer.json`](.devcontainer/devcontainer.json). This includes the installation of a VS Code server and LaTeX Workshop extension inside the container for syntax highighting, intellisense, automatic builds, and PDF previews.
 
 The `Dockerfile` is set up to mount a volume at `/data`, and the `devcontainer.json` specifies arguments to mount the workspace within the container. Build artifacts are dropped into `/data/out`.
+
+If you prefer to develop without VS Code, or without the containers extension, you can run `docker` commands directly to build the result. The results/artifacts will be in the `out` directory.
+
+```bash
+docker build -t latex-build .
+docker run -v $PWD:/data latex-build /data/src/build.sh
+```
 
 # Inspirations
 
