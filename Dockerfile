@@ -41,6 +41,5 @@ RUN mkdir /install-tl-unx \
       tcolorbox \
 &&  rm -rf /install-tl-unx
 
-ENV HOME /data
-WORKDIR /data
+WORKDIR /data/src
 VOLUME ["/data"]
