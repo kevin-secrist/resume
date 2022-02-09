@@ -22,7 +22,7 @@
 \begin{document}
     \makecvheader
     \makecvfooter
-        {\textsc{\today}}
+        {\textsc{\today\InputIfFileExists{version.txt}{ - }{}}}
         {\textsc{Kevin Secrist - CV}}
         {\thepage}
     \input{sections/headline}
