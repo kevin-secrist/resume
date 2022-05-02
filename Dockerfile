@@ -2,11 +2,13 @@ FROM phusion/baseimage:master-amd64
 ENV baseDir .
 
 RUN apt-get update \
-&&  apt-get install -y build-essential wget \
+&&  apt-get install -y build-essential wget libfontconfig1 \
 &&  rm -rf /var/lib/apt/lists/*
 
 ARG TEXLIVE_MIRROR=http://mirror.ctan.org/systems/texlive/tlnet
-ENV PATH "${PATH}:/usr/local/texlive/2020/bin/x86_64-linux"
+ENV MANPATH "${MANPATH}:/usr/local/texlive/2022/texmf-dist/doc/man"
+ENV INFOPATH "${INFOPATH}:/usr/local/texlive/2022/texmf-dist/doc/info"
+ENV PATH "${PATH}:/usr/local/texlive/2022/bin/x86_64-linux"
 
 RUN mkdir /install-tl-unx \
 &&  curl -sSL \
