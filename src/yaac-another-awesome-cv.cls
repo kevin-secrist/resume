@@ -89,6 +89,28 @@
 \newcommand\ifnotempty[2]{
    \ifthenelse{\equal{#1}{}}{}{#2}}
 
+% allow access to environment variables
+% for build-time options
+\newcommand*{\getenv}[1]{\directlua{tex.sprint(os.getenv('#1'))}}
+
+% exclude from resume
+\newif\ifcv
+\newcommand*{\cvonly}[1]{\ifcv#1\fi}
+
+% exclude from cv
+\newif\ifresume
+\newcommand*{\resumeonly}[1]{\ifresume#1\fi}
+
+\newcommand{\resumeurl}{secrist.dev/about/resume}
+\newcommand{\cvurl}{secrist.dev/about/cv}
+\newcommand{\thislink}[1]{%
+    \ifcv
+        #1{https://\cvurl}{\cvurl}
+    \else
+        #1{https://\resumeurl}{\resumeurl}
+    \fi
+}
+
 \DeclareUnicodeCharacter{00E9}{\'{e}}
 % Define default accent colors
 \definecolor{basecolor}{HTML}{000066}       %BLUE
@@ -206,7 +228,7 @@
 \newcommand{\websiteSymbol}{\faLink}
 
 
-\newcommand\link[2]{\color{linkcolor}\href{#1}{#2}\color{Black} }
+\newcommand\link[2]{\color{linkcolor}\href{#1}{#2}\color{Black}\ }
 \newcommand\important[1]{\textbf #1}
 
 % Create a tag
@@ -521,4 +543,3 @@
     \end{tabular}
   \end{minipage}%
 }
-

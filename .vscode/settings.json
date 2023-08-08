@@ -20,10 +20,11 @@
                 "-outdir=%OUTDIR%",
                 "%DOC%"
             ],
-            "env": {}
+            "env": {
+                "VERSION": "v1.0.4"
+            }
         }
     ],
-    "latex-workshop.latex.watch.usePolling": true,
     "latex-workshop.latex.watch.files.ignore": [
         "**/*.bbx",
         "**/*.bbl",

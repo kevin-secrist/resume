@@ -1,9 +1,9 @@
 % !TEX TS-program = latexmk
-% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -lualatex -outdir=/data/src/out /data/src/cv
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -lualatex -outdir=/data/src/out /data/src/resume
 
 \documentclass[localFont,alternative,compact]{yaac-another-awesome-cv}
 \selectlanguage{english}
-\cvtrue
+\resumetrue
 
 \input{sections/header}
 
@@ -17,6 +17,7 @@
     \input{sections/competencies}
     \input{sections/experience}
     \input{sections/education}
+    % \clearpage % pushes project section onto next page
     \input{sections/projects}
     \input{sections/strengths}
     \input{sections/interests}
