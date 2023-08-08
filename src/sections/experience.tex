@@ -4,35 +4,39 @@
     {Current}       {Software Developer III}{Rackspace Technology | Managed Public Cloud - AWS}
     {December 2020} {
                       \begin{itemize}
-                        \item Transitioned to a new team supporting several thousand Amazon Web Services accounts for Rackspace customers.
-                        \item Started working with new tech stack with Node.js, React, Terraform, and several AWS services.
+                        \item Transitioned to a new team supporting thousands of AWS, Azure, and GCP accounts for RXT customers.
+                        \item Started working with a new tech stack: Node.js, React, Terraform, and several AWS services.
                         \item Designed feedback loop for a Step Function to subscribe asynchronously to an event from Kinesis.
                         \item Completed A Cloud Guru course for AWS Certified Developer Associate.
                         \item Designed and implemented several new Racker and Customer experiences including both UI and API.
-                        \item Assumed technical leadership role for guiding the Azure and GCP teams, as well as being flexible to work on their projects.
-                        \item Worked across team boundaries to update \link{https://www.rackspace.com/sites/default/files/white-papers/Rackspace-Service-Overview-Service-Guide-for-Service-Blocks-Enterprise-Version-AZU-12621.pdf\#page=7}{Watchman} (owned by a different team) to support Azure Log Analytics V2 Alert Rules without prior knowledge of the product, requirements, or prior history of the project.
+                        \item Assumed technical leadership role for guiding the Azure and GCP teams. Remained flexible enough to work on their projects with widespread domain knowledge.
+                        \item Architected and implemented an extensible cross-team multi-account \link{https://aws.amazon.com/security-hub/}{Security Hub} and \link{https://aws.amazon.com/guardduty/}{GuardDuty} solution for detecting and alerting on security issues within the organization across all AWS regions. Included documentation and reusable terraform modules for other teams to be included without knowing all the details of Security Hub.
+                        \item Optimized docker builds to reduce build times by half for new projects using layer caching and ordering, decreasing developer feedback time significantly.
                       \end{itemize}
                     }
-                    {Node.js,AWS,Lambda,Terraform,Docker,DevOps}
+                    {Node.js,AWS,Lambda,ECS,Terraform,Docker,DevOps}
   \emptySeparator
   \experience
     {November 2020} {Software Developer III}{Rackspace Technology | Rackspace Solution Services}
     {June 2019}     {
                       \begin{itemize}
                         \item Responsible for refining product requirements, delivering on the execution and deployment of solutions, software development life cycle, and architecture of stack for a 10+ person development team.
-                        \item Key developer of a growing Office 365 business since its beginning in 2014, now generating over \$4M recurring monthly revenue.
+                        \item Key developer of a growing Office 365 business since its beginning in 2014, generating over \$4M recurring monthly revenue in 2019.
                         \item Interviewed and on-boarded several new developers as part of initiative to more than double current team size. Included domain knowledge training, pair programming, and business analysis.
-                        \item Ported a Ruby tool for managing data from several heterogeneous data sources to a new extensible dotnet tool and added new features including code generation. This accelerated the ability to offer hundreds of Office 365 products and add ten to twenty new products per month as well as allowing more developers with C\# experience to further enhance the tool.
                         \item Designed a distributed authorization model that encompasses Office 365 built-in roles, Rackspace customer authorization, and custom business rules. This model is secure, scalable, and highly flexible allowing client-side to have incredibly fine-grained knowledge of the capabilities of the logged in user as well as server-side being able to quickly validate the user's claims.
+                        \ifcv
+                        \item Ported a Ruby tool for managing data from several heterogeneous data sources to a new extensible dotnet tool and added new features including code generation. This accelerated the ability to offer hundreds of Office 365 products and add ten to twenty new products per month as well as allowing more developers with C\# experience to further enhance the tool.
                         \item Implemented a data-driven object model for presenting product information to customers that enables filtering on combinations of dimensions to create adjustable hierarchical categorizations of products without additional code or deployments.
                         \item Designed multiple proof of concepts of PowerShell on Azure Functions to run scripts against thousands of customer environments per day for security reporting and metric gathering.
+                        \fi
                       \end{itemize}
                     }
                     {C\#,Azure Functions v3,Durable Functions,OAuth}
   \emptySeparator
   \experience
     {May 2019}     {Software Developer II}{Rackspace | Rackspace Office 365}
-    {June 2017}    {
+    {\cvonly{June 2017}\resumeonly{May 2015}}
+                    {
                       \begin{itemize}
                         \item On-boarded developers from other teams to bootstrap a new team to work on Office 365 and taught domain-specific knowledge to kick-start development.
                         \item Began work on a new Office 365 Control Panel in Azure App Services using React, ASP.NET Core, and Azure Functions allowing developers to focus more on business logic than infrastructure.
@@ -42,32 +46,37 @@
                       \end{itemize}
                     }
                     {C\#, ASP.NET Core, React, Elasticsearch, Azure Functions v1, Durable Functions}
+\ifcv
   \emptySeparator
   \experience
     {May 2017}     {Software Developer II}{Rackspace | Cloud Office Product Enablement}
     {May 2015}     {
                       \begin{itemize}
                         \item Continued to work on multi-tenant provisioning of Microsoft products.
+                        \item Gained experience with full-stack development by working across teams on various systems.
                         \item Worked independently to design and implement multiple new projects from scratch.
                         \item Created a new pattern for asynchronous workflows to increase reliability and speed of development for new Office 365 license provisioning, growing at a rate of 5,000+ new licenses per month.
-                        \item Gained experience with full-stack development by working across teams on various systems.
                         \item Revamped deployment, monitoring systems, and change management tracking for microservices to enable continuous deployment.
                       \end{itemize}
                     }
                     {C\#, ASP.NET, PowerShell, Chef, JSON Hyper-Schema}
+\fi
   \emptySeparator
   \experience
   {April 2015}       {Software Developer I}{Rackspace | Microsoft Services}
   {July 2013}        {
                       \begin{itemize}
                         \item Worked on provisioning mailboxes in a growing 300,000+ seat multi-tenant Microsoft Exchange environment and upgraded existing systems to sell new Office product suites and newer Exchange versions.
-                        \item Quickly learned broad knowledge of .NET with knowledge of company software and architecture.
+                        \item Quickly learned broad knowledge of .NET, company software, and architecture.
                         \item Researched and utilized domain-specific knowledge to design provisioning of new products.
+                        \ifcv
                         \item Worked with multiple teams to orchestrate rollouts of new features.
                         \item Automated setup and teardown of ephemeral production-like cloud test environments for integration tests utilizing extensible and repeatable patterns.
                         \item Showed deep dedication to build and production stability by quickly detecting, responding to, and solving production issues.
                         \item Took responsibility for improving deployment processes by working with operations teams and developing better deployment tools.
-                        \item Wrote a PowerShell module for managing and utilizing numerous test environments, and a Ruby tool for that enforced a pattern around validating REST API documentation as a component in moving towards a Service Oriented Architecture.
+                        \item Wrote a PowerShell module for managing and utilizing numerous test environments
+                        \item Created a Ruby tool and CI build which validated REST API documentation as a component in moving towards a Service Oriented Architecture.
+                        \fi
                       \end{itemize}
                     }
                     {C\#, PowerShell, Git, Ruby, Chef, ELK, MongoDB}

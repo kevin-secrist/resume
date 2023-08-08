@@ -3,14 +3,16 @@
     \project
     {Chesterfield County Active Call Monitor}{2019 - Current}
     {\github{kevin-secrist/cfactivecallmonitor}}
-    {AWS Lambda service written in Go (my first experience with golang) which periodically checks for active dispatch calls for Police/Fire events near me. Sends alerts via SMS based on location of dispatch. Designed for low maintenance and low cost - an excellent use case for FaaS. Includes a ci/cd pipeline, unit tests, and infrastructure as code.}
+    {AWS Lambda service written in Go (my first experience with golang) which periodically checks for active dispatch calls for Police/Fire events near me. Sends alerts via SMS based on location of dispatch. Designed for low maintenance and low cost - an excellent use case for FaaS. Includes a ci/cd pipeline, unit tests, and infrastructure as code. Replatformed from C\#/Azure to Go/AWS in 2022.}
     {Lambda,DynamoDB,Twilio,Go,GitHub Actions,Terraform}
 
+    \ifcv
     \project
     {Personal Website}{2019 - Current}
     {\website{https://secrist.dev}{secrist.dev}\github{kevin-secrist/secrist.dev}}
-    {Personal website/blog where I plan to post things I've learned. Designed to be low maintenance and low cost without losing high availability, performance, or security. Deployed automatically from GitHub via Cloudflare Pages, with dynamic content served using CloudFlare Workers.}
+    {Personal website/blog where (someday) I plan to post things I've learned. Designed to be low maintenance and low cost without losing high availability, performance, or security. Deployed automatically from GitHub via Cloudflare Pages, with dynamic content served using CloudFlare Workers.}
     {Jekyll, CloudFlare Workers, CloudFlare Pages}
+    \fi
 
     \project
     {This Document}{2020 - Current}
@@ -18,9 +20,11 @@
     {Source controlled open-source resume. Link on website automatically references latest release from GitHub.}%Includes CI/CD pipeline for deployment to personal website.}
     {\LaTeX,Docker}
 
+    \ifcv
     \project
     {Homelab}{2020 - Current}
     {}
     {Used for exploring virtualization, containers, networking, and software development. Examples of self-hosted services include UniFi Controller, HomeAssistant, TrueNAS, Nextcloud, and Plex. HTTP services proxied through Traefik with TLS encryption.}
     {Proxmox, Docker, Docker Compose, Traefik, Let's Encrypt}
+    \fi
 \end{projects}
