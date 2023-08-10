@@ -1,8 +1,12 @@
 {
     "name": "latex-build",
-    "extensions": [
-        "james-yu.latex-workshop"
-    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "james-yu.latex-workshop"
+            ]
+        }
+    },
     "dockerFile": "../Dockerfile",
     "context": "../src",
     "workspaceMount": "source=${localWorkspaceFolder},target=/data,type=bind,consistency=cached",
