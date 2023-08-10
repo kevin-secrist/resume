@@ -1,14 +1,19 @@
-FROM phusion/baseimage:master-amd64
-ENV baseDir .
+FROM ubuntu:jammy
+
+ARG USERNAME=latex
+ARG UID=1000
+ARG GID=$UID
+RUN groupadd --gid $GID $USERNAME \
+&&  useradd --uid $UID --gid $GID -m $USERNAME
 
 RUN apt-get update \
-&&  apt-get install -y build-essential wget libfontconfig1 \
+&&  apt-get install -y build-essential wget curl libfontconfig1 \
 &&  rm -rf /var/lib/apt/lists/*
 
-ARG TEXLIVE_MIRROR=http://mirror.ctan.org/systems/texlive/tlnet
-ENV MANPATH "${MANPATH}:/usr/local/texlive/2022/texmf-dist/doc/man"
-ENV INFOPATH "${INFOPATH}:/usr/local/texlive/2022/texmf-dist/doc/info"
-ENV PATH "${PATH}:/usr/local/texlive/2022/bin/x86_64-linux"
+ARG TEXLIVE_MIRROR=https://mirror.ctan.org/systems/texlive/tlnet
+ENV MANPATH "${MANPATH}:/usr/local/texlive/2023/texmf-dist/doc/man"
+ENV INFOPATH "${INFOPATH}:/usr/local/texlive/2023/texmf-dist/doc/info"
+ENV PATH "${PATH}:/usr/local/texlive/2023/bin/x86_64-linux"
 
 RUN mkdir /install-tl-unx \
 &&  curl -sSL \
@@ -23,8 +28,8 @@ RUN mkdir /install-tl-unx \
 &&  /install-tl-unx/install-tl \
       -profile /install-tl-unx/texlive.profile \
       -repository ${TEXLIVE_MIRROR} \
-    \
-&&  tlmgr install --repository ${TEXLIVE_MIRROR} \
+&&  rm -rf /install-tl-unx
+RUN tlmgr install --repository ${TEXLIVE_MIRROR} \
       latexmk \
       texcount \
       luatexbase \
@@ -41,7 +46,8 @@ RUN mkdir /install-tl-unx \
       etoolbox \
       pgf \
       tcolorbox \
-&&  rm -rf /install-tl-unx
+      tikzfill
 
+USER $USERNAME
 WORKDIR /data/src
 VOLUME ["/data"]
