@@ -1,5 +1,5 @@
 {
-    "latex-workshop.latex.outDir": "%DIR%/out",
+    "latex-workshop.latex.outDir": "%DIR%/../out",
     "latex-workshop.latex.recipes": [
         {
             "name": "latexmk",
