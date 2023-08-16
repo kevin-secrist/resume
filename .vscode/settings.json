@@ -19,10 +19,7 @@
                 "-lualatex",
                 "-outdir=%OUTDIR%",
                 "%DOC%"
-            ],
-            "env": {
-                "VERSION": "v1.0.4"
-            }
+            ]
         }
     ],
     "latex-workshop.latex.watch.files.ignore": [

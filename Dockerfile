@@ -6,8 +6,12 @@ ARG GID=$UID
 RUN groupadd --gid $GID $USERNAME \
 &&  useradd --uid $UID --gid $GID -m $USERNAME
 
+ARG TZ
+ENV TZ="$TZ"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN apt-get update \
-&&  apt-get install -y build-essential wget curl libfontconfig1 \
+&&  apt-get install -y build-essential wget curl libfontconfig1 tzdata \
 &&  rm -rf /var/lib/apt/lists/*
 
 ARG TEXLIVE_MIRROR=https://mirror.ctan.org/systems/texlive/tlnet
