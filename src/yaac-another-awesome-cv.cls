@@ -101,6 +101,9 @@
 \newif\ifresume
 \newcommand*{\resumeonly}[1]{\ifresume#1\fi}
 
+\newif\ifcover
+\newcommand*{\notcover}[1]{\ifcover\else#1\fi}
+
 \newcommand{\resumeurl}{secrist.dev/about/resume}
 \newcommand{\cvurl}{secrist.dev/about/cv}
 \newcommand{\thislink}[1]{%
