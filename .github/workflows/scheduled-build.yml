@@ -1,0 +1,23 @@
+on:
+  schedule:
+    - cron: "0 16 * * 2"
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    name: Build Docker Image
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ github.repository_owner }}/latex:latest
+            ghcr.io/${{ github.repository_owner }}/latex:latest

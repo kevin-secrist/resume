@@ -24,7 +24,7 @@ If you prefer to develop without VS Code, or without the containers extension, y
 
 ```bash
 docker build -t latex-build .
-docker run -v $PWD:/data latex-build /data/src/build.sh
+docker run -v $PWD:/data -w /data/src latex-build ./build.sh
 ```
 
 # Inspirations
