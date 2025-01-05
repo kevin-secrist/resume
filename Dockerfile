@@ -55,3 +55,5 @@ RUN tlmgr install --repository ${TEXLIVE_MIRROR} \
       tikzfill
 
 USER $UID:$GID
+LABEL org.opencontainers.image.source=https://github.com/kevin-secrist/resume
+LABEL org.opencontainers.image.description="Basic LaTeX image for building a resume"
