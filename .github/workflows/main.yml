@@ -80,7 +80,7 @@ jobs:
           if-no-files-found: error
           name: output
           path: |
-            ./src/out/cv.log
+            ./src/out/*.log
             ./src/out/*.pdf
   release:
     name: Release
