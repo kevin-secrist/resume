@@ -1,10 +1,12 @@
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
+# the ubuntu image now creates a user "ubuntu" by default with UID 1000
+# the USERNAME will only be used if the given UID is not already taken
 ARG USERNAME=latex
 ARG UID=1000
 ARG GID=$UID
-RUN groupadd --gid $GID $USERNAME \
-&&  useradd --uid $UID --gid $GID -m $USERNAME
+RUN id -g $GID &>/dev/null || groupadd --gid $GID $USERNAME \
+&&  id -u $UID &>/dev/null || useradd --uid $UID --gid $GID -m $USERNAME
 
 ARG TZ
 ENV TZ="$TZ"
@@ -15,9 +17,9 @@ RUN apt-get update \
 &&  rm -rf /var/lib/apt/lists/*
 
 ARG TEXLIVE_MIRROR=https://mirror.ctan.org/systems/texlive/tlnet
-ENV MANPATH "${MANPATH}:/usr/local/texlive/2023/texmf-dist/doc/man"
-ENV INFOPATH "${INFOPATH}:/usr/local/texlive/2023/texmf-dist/doc/info"
-ENV PATH "${PATH}:/usr/local/texlive/2023/bin/x86_64-linux"
+ENV MANPATH "${MANPATH}:/usr/local/texlive/2024/texmf-dist/doc/man"
+ENV INFOPATH "${INFOPATH}:/usr/local/texlive/2024/texmf-dist/doc/info"
+ENV PATH "${PATH}:/usr/local/texlive/2024/bin/x86_64-linux"
 
 RUN mkdir /install-tl-unx \
 &&  curl -sSL \
@@ -52,6 +54,4 @@ RUN tlmgr install --repository ${TEXLIVE_MIRROR} \
       tcolorbox \
       tikzfill
 
-USER $USERNAME
-WORKDIR /data/src
-VOLUME ["/data"]
+USER $UID:$GID
