@@ -14,12 +14,14 @@ jobs:
       tag: ${{ steps.select_image.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Select Docker Image
         id: select_image
         shell: bash
         run: |
           ref=${{ github.ref_name }}
-          status=$(git diff --exit-code origin/main:Dockerfile Dockerfile > /dev/null && echo "unchanged" || echo "changed")
+          status=$(git diff --exit-code origin/main Dockerfile > /dev/null && echo "unchanged" || echo "changed")
           if [[ "$ref" = "main" ]]; then
             echo "build_image=true" >> "$GITHUB_OUTPUT";
             echo "tag=latest" >> "$GITHUB_OUTPUT";
