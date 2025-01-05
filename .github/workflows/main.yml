@@ -75,6 +75,8 @@ jobs:
         working-directory: ${{ github.workspace }}/src
         env:
           VERSION: ${{ steps.detect_version.outputs.version }}
+      - run: ls -sR
+      - run: ls -sR ${{ github.workspace }}
       - uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
