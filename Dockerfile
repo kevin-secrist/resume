@@ -1,25 +1,13 @@
 FROM ubuntu:noble
 
-# the ubuntu image now creates a user "ubuntu" by default with UID 1000
-# the USERNAME will only be used if the given UID is not already taken
-ARG USERNAME=latex
-ARG UID=1000
-ARG GID=$UID
-RUN id -g $GID &>/dev/null || groupadd --gid $GID $USERNAME \
-&&  id -u $UID &>/dev/null || useradd --uid $UID --gid $GID -m $USERNAME
-
-ARG TZ
-ENV TZ="$TZ"
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
 RUN apt-get update \
 &&  apt-get install -y build-essential wget curl libfontconfig1 tzdata \
 &&  rm -rf /var/lib/apt/lists/*
 
 ARG TEXLIVE_MIRROR=https://mirror.ctan.org/systems/texlive/tlnet
-ENV MANPATH "${MANPATH}:/usr/local/texlive/2024/texmf-dist/doc/man"
-ENV INFOPATH "${INFOPATH}:/usr/local/texlive/2024/texmf-dist/doc/info"
-ENV PATH "${PATH}:/usr/local/texlive/2024/bin/x86_64-linux"
+ENV MANPATH="${MANPATH}:/usr/local/texlive/2024/texmf-dist/doc/man" \
+    INFOPATH="${INFOPATH}:/usr/local/texlive/2024/texmf-dist/doc/info" \
+    PATH="${PATH}:/usr/local/texlive/2024/bin/x86_64-linux"
 
 RUN mkdir /install-tl-unx \
 &&  curl -sSL \
@@ -54,6 +42,5 @@ RUN tlmgr install --repository ${TEXLIVE_MIRROR} \
       tcolorbox \
       tikzfill
 
-USER $UID:$GID
 LABEL org.opencontainers.image.source=https://github.com/kevin-secrist/resume
 LABEL org.opencontainers.image.description="Basic LaTeX image for building a resume"
