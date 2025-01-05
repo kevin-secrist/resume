@@ -61,9 +61,8 @@ jobs:
     name: Build Documents
     container:
       image: ghcr.io/${{ github.repository_owner }}/latex:${{ needs.build-docker.outputs.tag }}
-      volumes:
-        - .:/data
     steps:
+      - run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
       - uses: actions/checkout@v4
       - name: Detect Version from Ref
         shell: bash
@@ -73,14 +72,14 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
       - name: Build with container
         run: build.sh
-        working-directory: /data/src
+        working-directory: ${{ github.workspace }}/src
         env:
           VERSION: ${{ steps.detect_version.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
           path: |
-            /data/src/out/cv.log
-            /data/src/out/*.pdf
+            ${{ github.workspace }}/src/out/cv.log
+            ${{ github.workspace }}/src/out/*.pdf
   release:
     name: Release
     needs: build-documents
