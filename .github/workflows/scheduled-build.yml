@@ -2,6 +2,9 @@ on:
   schedule:
     - cron: "0 16 * * 2"
 
+permissions:
+  packages: write
+
 jobs:
   build-docker:
     runs-on: ubuntu-latest
