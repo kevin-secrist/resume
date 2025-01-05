@@ -5,8 +5,8 @@ RUN apt-get update \
 &&  rm -rf /var/lib/apt/lists/*
 
 ARG TEXLIVE_MIRROR=https://mirror.ctan.org/systems/texlive/tlnet
-ENV MANPATH="${MANPATH}:/usr/local/texlive/2024/texmf-dist/doc/man" \
-    INFOPATH="${INFOPATH}:/usr/local/texlive/2024/texmf-dist/doc/info" \
+ENV MANPATH="/usr/local/texlive/2024/texmf-dist/doc/man" \
+    INFOPATH="/usr/local/texlive/2024/texmf-dist/doc/info" \
     PATH="${PATH}:/usr/local/texlive/2024/bin/x86_64-linux"
 
 RUN mkdir /install-tl-unx \
