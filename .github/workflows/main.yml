@@ -16,7 +16,7 @@ jobs:
         shell: bash
         run: |
           branch=${{ github.ref_name }}
-          status=$(git diff --exit-code origin/main Dockerfile > /dev/null && echo "unchanged" || echo "changed")
+          status=$(git diff --exit-code origin/main -- Dockerfile > /dev/null && echo "unchanged" || echo "changed")
           if [[ "$branch" = "main" ]]; then
             echo "build_image=true" >> "$GITHUB_OUTPUT";
             echo "tag=latest" >> "$GITHUB_OUTPUT";
