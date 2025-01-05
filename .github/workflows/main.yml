@@ -62,19 +62,22 @@ jobs:
     container:
       image: ghcr.io/${{ github.repository_owner }}/latex:${{ needs.build-docker.outputs.tag }}
       options: --user 1001
+    outputs:
+      version: ${{ steps.version.outputs.v-version }}
     steps:
       - uses: actions/checkout@v4
-      - name: Detect Version from Ref
-        shell: bash
-        id: detect_version
-        run: |
-          [[ $GITHUB_REF == refs/tags/v* ]] && VERSION="${GITHUB_REF#refs/tags/}" || VERSION="${GITHUB_SHA::8}"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Get next version
+        uses: reecetech/version-increment@2024.10.1
+        id: version
+        with:
+          use_api: true
+          scheme: conventional_commits
+          increment: patch
       - name: Build with container
         run: ./build.sh
         working-directory: ./src
         env:
-          VERSION: ${{ steps.detect_version.outputs.version }}
+          VERSION: ${{ steps.version.outputs.v-version }}
       - uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
@@ -92,17 +95,10 @@ jobs:
         with:
           name: output
           pattern: "*.pdf"
-      - name: Get next version
-        uses: reecetech/version-increment@2024.10.1
-        id: version
-        with:
-          use_api: true
-          scheme: conventional_commits
-          increment: patch
       - uses: softprops/action-gh-release@v2
         with:
-          name: ${{ steps.version.outputs.v-version }}
-          tag_name: ${{ steps.version.outputs.v-version }}
+          name: ${{ needs.build-documents.outputs.version }}
+          tag_name: ${{ needs.build-documents.outputs.version }}
           generate_release_notes: true
           # make_latest: true
           make_latest: false
