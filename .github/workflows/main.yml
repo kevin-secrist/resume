@@ -18,9 +18,9 @@ jobs:
         id: select_image
         shell: bash
         run: |
-          branch=${{ github.ref_name }}
-          status=$(git diff --exit-code origin/main -- Dockerfile > /dev/null && echo "unchanged" || echo "changed")
-          if [[ "$branch" = "main" ]]; then
+          ref=${{ github.ref_name }}
+          status=$(git diff --exit-code origin/main:Dockerfile Dockerfile > /dev/null && echo "unchanged" || echo "changed")
+          if [[ "$ref" = "main" ]]; then
             echo "build_image=true" >> "$GITHUB_OUTPUT";
             echo "tag=latest" >> "$GITHUB_OUTPUT";
           else
