@@ -7,8 +7,7 @@
             ]
         }
     },
-    "dockerFile": "../Dockerfile",
-    "context": "../src",
+    "image": "ghcr.io/kevin-secrist/latex:latest",
     "workspaceMount": "source=${localWorkspaceFolder},target=/data,type=bind,consistency=cached",
     "workspaceFolder": "/data",
     "runArgs": [ ]
