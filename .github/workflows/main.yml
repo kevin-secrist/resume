@@ -71,7 +71,7 @@ jobs:
           [[ $GITHUB_REF == refs/tags/v* ]] && VERSION="${GITHUB_REF#refs/tags/}" || VERSION="${GITHUB_SHA::8}"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
       - name: Build with container
-        run: build.sh
+        run: ./build.sh
         working-directory: ${{ github.workspace }}/src
         env:
           VERSION: ${{ steps.detect_version.outputs.version }}
