@@ -61,8 +61,8 @@ jobs:
     name: Build Documents
     container:
       image: ghcr.io/${{ github.repository_owner }}/latex:${{ needs.build-docker.outputs.tag }}
+      options: --user 1001
     steps:
-      - run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE
       - uses: actions/checkout@v4
       - name: Detect Version from Ref
         shell: bash
