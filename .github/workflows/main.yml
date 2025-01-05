@@ -66,12 +66,11 @@ jobs:
       version: ${{ steps.version.outputs.v-version }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Get next version
         uses: reecetech/version-increment@2024.10.1
         id: version
         with:
+          use_api: true
           scheme: conventional_commits
           increment: patch
       - name: Build with container

@@ -1,7 +1,7 @@
 FROM ubuntu:noble
 
 RUN apt-get update \
-&&  apt-get install -y build-essential wget curl libfontconfig1 tzdata \
+&&  apt-get install -y build-essential wget curl libfontconfig1 tzdata jq \
 &&  rm -rf /var/lib/apt/lists/*
 
 ARG TEXLIVE_MIRROR=https://mirror.ctan.org/systems/texlive/tlnet
