@@ -1,2 +1,1 @@
 $ENV{'TZ'}='America/New_York';
-$ENV{'VERSION'}='v1.0.5';

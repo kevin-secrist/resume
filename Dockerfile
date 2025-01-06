@@ -1,23 +1,13 @@
-FROM ubuntu:jammy
-
-ARG USERNAME=latex
-ARG UID=1000
-ARG GID=$UID
-RUN groupadd --gid $GID $USERNAME \
-&&  useradd --uid $UID --gid $GID -m $USERNAME
-
-ARG TZ
-ENV TZ="$TZ"
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+FROM ubuntu:noble
 
 RUN apt-get update \
-&&  apt-get install -y build-essential wget curl libfontconfig1 tzdata \
+&&  apt-get install -y build-essential wget curl libfontconfig1 tzdata jq git \
 &&  rm -rf /var/lib/apt/lists/*
 
 ARG TEXLIVE_MIRROR=https://mirror.ctan.org/systems/texlive/tlnet
-ENV MANPATH "${MANPATH}:/usr/local/texlive/2023/texmf-dist/doc/man"
-ENV INFOPATH "${INFOPATH}:/usr/local/texlive/2023/texmf-dist/doc/info"
-ENV PATH "${PATH}:/usr/local/texlive/2023/bin/x86_64-linux"
+ENV MANPATH="/usr/local/texlive/2024/texmf-dist/doc/man" \
+    INFOPATH="/usr/local/texlive/2024/texmf-dist/doc/info" \
+    PATH="${PATH}:/usr/local/texlive/2024/bin/x86_64-linux"
 
 RUN mkdir /install-tl-unx \
 &&  curl -sSL \
@@ -52,6 +42,5 @@ RUN tlmgr install --repository ${TEXLIVE_MIRROR} \
       tcolorbox \
       tikzfill
 
-USER $USERNAME
-WORKDIR /data/src
-VOLUME ["/data"]
+LABEL org.opencontainers.image.source=https://github.com/kevin-secrist/resume
+LABEL org.opencontainers.image.description="Basic LaTeX image for building a resume"

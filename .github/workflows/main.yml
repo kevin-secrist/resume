@@ -1,0 +1,107 @@
+on:
+  pull_request:
+  push:
+    branches: main
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    name: Build Docker Image
+    outputs:
+      tag: ${{ steps.select_image.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Select Docker Image
+        id: select_image
+        shell: bash
+        run: |
+          ref=${{ github.ref_name }}
+          status=$(git diff --exit-code origin/main Dockerfile > /dev/null && echo "unchanged" || echo "changed")
+          if [[ "$ref" = "main" ]]; then
+            echo "build_image=true" >> "$GITHUB_OUTPUT";
+            echo "tag=latest" >> "$GITHUB_OUTPUT";
+          else
+            if [[ "$status" = "changed" ]]; then
+              echo "tag=$GITHUB_SHA" >> "$GITHUB_OUTPUT";
+              echo "build_image=true" >> "$GITHUB_OUTPUT";
+            else
+              echo "tag=latest" >> "$GITHUB_OUTPUT";
+              echo "build_image=false" >> "$GITHUB_OUTPUT";
+            fi;
+          fi;
+      - name: Login to GitHub Container Registry
+        if: steps.select_image.outputs.build_image == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        if: steps.select_image.outputs.build_image == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/latex:${{ steps.select_image.outputs.tag }}
+
+  build-documents:
+    runs-on: ubuntu-latest
+    needs: build-docker
+    name: Build Documents
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/latex:${{ needs.build-docker.outputs.tag }}
+      options: --user 1001
+    outputs:
+      version: ${{ steps.version.outputs.v-version }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get next version
+        uses: reecetech/version-increment@2024.10.1
+        id: version
+        with:
+          use_api: true
+          scheme: conventional_commits
+          increment: patch
+      - name: Build with container
+        run: ./build.sh
+        working-directory: ./src
+        env:
+          VERSION: ${{ steps.version.outputs.v-version }}
+      - uses: actions/upload-artifact@v4
+        with:
+          if-no-files-found: error
+          name: output
+          path: |
+            ./src/out/*.log
+            ./src/out/*.pdf
+  release:
+    name: Release
+    needs: build-documents
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: output
+          pattern: "*.pdf"
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ needs.build-documents.outputs.version }}
+          tag_name: ${{ needs.build-documents.outputs.version }}
+          generate_release_notes: true
+          make_latest: true
+          fail_on_unmatched_files: true
+          files: |
+            secrist-resume.pdf
+            secrist-cv.pdf
