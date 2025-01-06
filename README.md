@@ -12,11 +12,11 @@ Building a LaTeX project locally normally requires a LaTeX environment which can
 
 Instead, for this project you only need to install a few things:
 
-* Docker for Windows or Linux
+* Docker
 * VS Code
 * Visual Studio Code Remote - Containers Extension (optional)
 
-That's basically it. There's more detailed documentation about using [remote containers within VS Code](https://code.visualstudio.com/docs/remote/containers) that may be helpful for setup. Once everything is installed, VS Code can build a Docker image and run a container locally based on the [`Dockerfile`](Dockerfile) and [`devcontainer.json`](.devcontainer/devcontainer.json). This includes the installation of a VS Code server and LaTeX Workshop extension inside the container for syntax highighting, intellisense, automatic builds, and PDF previews.
+That's basically it. There's more detailed documentation about using [remote containers within VS Code](https://code.visualstudio.com/docs/remote/containers) that may be helpful for setup. Once everything is installed, VS Code will pull a [Docker image](https://github.com/kevin-secrist/resume/pkgs/container/latex) (based on the [`Dockerfile`](Dockerfile)) and run a container locally based on the arguments in [`devcontainer.json`](.devcontainer/devcontainer.json). This includes the automatic installation of a VS Code server and LaTeX Workshop extension inside the container for syntax highighting, intellisense, automatic builds, and PDF previews.
 
 The `Dockerfile` is set up to mount a volume at `/data`, and the `devcontainer.json` specifies arguments to mount the workspace within the container. Build artifacts are dropped into `/data/out`.
 
@@ -26,6 +26,16 @@ If you prefer to develop without VS Code, or without the containers extension, y
 docker build -t latex-build .
 docker run -v $PWD:/data -w /data/src latex-build ./build.sh
 ```
+
+# CI/CD
+
+This repo is set up to automatically build PRs, and release the newly built artifacts on merge to `main`. See [.github](.github) for the workflow definitions. New docker images are only built/pushed in PRs if the `Dockerfile` differs from what's in the `main` branch, allowing for a quick dev cycle when not developing locally (like when making changes directly in GitHub - this repo is for a document after all).
+
+# Screenshot
+
+This is what it looks like to develop locally, using the Dev Container in VS Code. On save, the file is rebuilt and automatically refreshed (thanks to the `james-yu.latex-workshop` extension).
+
+![screenshot](./docs/screenshot.png)
 
 # Inspirations
 
