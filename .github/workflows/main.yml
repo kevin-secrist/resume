@@ -88,6 +88,9 @@ jobs:
   release:
     name: Release
     needs: build-documents
+    environment:
+      name: production
+      url: https://secrist.dev/about/resume
     if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     steps:
