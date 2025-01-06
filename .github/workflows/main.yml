@@ -88,7 +88,7 @@ jobs:
   release:
     name: Release
     needs: build-documents
-    # if: github.ref_name == 'main'
+    if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -100,9 +100,7 @@ jobs:
           name: ${{ needs.build-documents.outputs.version }}
           tag_name: ${{ needs.build-documents.outputs.version }}
           generate_release_notes: true
-          # make_latest: true
-          make_latest: false
-          draft: true
+          make_latest: true
           fail_on_unmatched_files: true
           files: |
             secrist-resume.pdf
