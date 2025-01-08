@@ -6,6 +6,10 @@
 
 This project started as a proof of concept to compare templates for Microsoft Word and LaTeX templates. In the past when I have used LaTeX I was always very satisfied with the result, and I think the additional benefits of source control and CI/CD made this option very compelling.
 
+# GitHub Codespace Support
+
+This repo takes advantage of [dev containers](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers), which natively works with [GitHub Codespaces](https://docs.github.com/en/codespaces/overview) allowing me to develop the project within a browser quite easily for quick changes.
+
 # Local Development Setup
 
 Building a LaTeX project locally normally requires a LaTeX environment which can be relatively painful to setup and there are numerous ways to do it incorrectly. I've found it much easier to run LaTeX within a container and follow the installation steps of other projects and developers who use LaTeX much more seriously.
