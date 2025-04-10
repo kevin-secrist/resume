@@ -5,9 +5,9 @@ RUN apt-get update \
 &&  rm -rf /var/lib/apt/lists/*
 
 ARG TEXLIVE_MIRROR=https://mirror.ctan.org/systems/texlive/tlnet
-ENV MANPATH="/usr/local/texlive/2024/texmf-dist/doc/man" \
-    INFOPATH="/usr/local/texlive/2024/texmf-dist/doc/info" \
-    PATH="${PATH}:/usr/local/texlive/2024/bin/x86_64-linux"
+ENV MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man" \
+    INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info" \
+    PATH="${PATH}:/usr/local/texlive/2025/bin/x86_64-linux"
 
 RUN mkdir /install-tl-unx \
 &&  curl -sSL \
