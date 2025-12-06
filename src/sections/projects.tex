@@ -3,28 +3,44 @@
     \project
     {Chesterfield County Active Call Monitor}{2019 - Current}
     {\github{kevin-secrist/cfactivecallmonitor}}
-    {AWS Lambda service written in Go (my first experience with golang) which periodically checks for active dispatch calls for Police/Fire events near me. Sends alerts via SMS based on location of dispatch. Designed for low maintenance and low cost - an excellent use case for FaaS. Includes a CI/CD pipeline, unit tests, monitoring/alerting, and infrastructure as code. Replatformed from C\#/Azure to Go/AWS in 2022.}
-    {Lambda,DynamoDB,Twilio,Go,GitHub Actions,Terraform}
+    {Serverless emergency dispatch monitoring system processing 400+ daily
+    events with location-based SMS alerts, architected for zero-cost operation
+    within AWS free tier. Replatformed from C\#/Azure to Go/AWS in 2022 to align
+    with team technology stack and expand Go proficiency while improving
+    stability. Demonstrates CI/CD automation, comprehensive testing,
+    infrastructure-as-code, and operational monitoring.}
+    {Lambda, DynamoDB, Twilio, Go, GitHub Actions, Terraform}
 
     \ifcv
     \project
     {Personal Website}{2019 - Current}
     {\website{https://secrist.dev}{secrist.dev}\github{kevin-secrist/secrist.dev}}
-    {Personal website/blog where (someday) I plan to post things I've learned. Designed to be low maintenance and low cost without losing high availability, performance, or security. Deployed automatically from GitHub via Cloudflare Pages, with dynamic content served using CloudFlare Workers.}
+    {Personal website built with CloudFlare Pages and Workers, featuring
+    automated GitHub deployments and dynamic resume/CV delivery via serverless
+    edge functions. Demonstrates serverless architecture patterns with zero
+    maintenance overhead and operational cost.}
     {Jekyll, CloudFlare Workers, CloudFlare Pages}
     \fi
 
     \project
     {This Document}{2020 - Current}
     {\thislink{\website}\github{kevin-secrist/resume}}
-    {Source controlled open-source resume. Link on website automatically references latest release from GitHub. Includes CI/CD pipeline for LaTeX docker image and automatic build/release of documents.}
+    {Open-source LaTeX resume with automated CI/CD pipeline. Docker-based build
+    system eliminates local LaTeX dependency management, reducing friction for
+    infrequent updates while enabling version control and collaboration.
+    Automated builds and releases via GitHub Actions.}
     {\LaTeX, Docker, GitHub Actions}
 
     \ifcv
     \project
     {Homelab}{2020 - Current}
     {}
-    {Used for exploring virtualization, containers, networking, and software development. Examples of self-hosted services include UniFi Controller, HomeAssistant, TrueNAS, Nextcloud, and Plex. HTTP services proxied through Traefik with TLS encryption.}
-    {Proxmox, Docker, Docker Compose, Traefik, Let's Encrypt}
+    {Self-hosted infrastructure on TrueNAS Scale for continuous learning aligned
+    with professional containerization work. Container-first architecture
+    (single VM for HomeAssistant, all other services via Docker Compose) behind
+    Traefik reverse proxy optimizes for low maintenance and high resource
+    density. Traefik integration enables automated service provisioning with TLS
+    encryption.}
+    {TrueNAS Scale, Docker, Docker Compose, Traefik, Let's Encrypt}
     \fi
 \end{projects}
