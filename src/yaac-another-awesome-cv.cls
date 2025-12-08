@@ -466,13 +466,14 @@
 %                      <Experience description (Could be a list)>
 %                    }
 %                    {<Technology list>}
-\newcommand\experience[6]{
-  \textbf{#1}    & \textbf{#2, \textsc{#3}}   			            			\\*
-  \textbf{#4}    & \begin{minipage}[t]{\rightcolumnlength}
-  					         #5
-                   \end{minipage}\smallskip							\\*
-                 & \footnotesize{\foreach \n in {#6}{\cvtag{\n}}} 	\\
-  }
+%                    {<Location type with icon, e.g., \faHome\ Remote>}
+\newcommand\experience[7]{
+  \textbf{#1} & \textbf{#2, \textsc{#3}} \hfill \textcolor{gray}{\small #7} \\*
+  \textbf{#4} & \begin{minipage}[t]{\rightcolumnlength}
+                  #5
+                \end{minipage}\smallskip \\*
+              & \footnotesize{\foreach \n in {#6}{\cvtag{\n}}} \\
+}
 
 % Define the empty separator macro with different spacing according to document class option 'compact'
 \if@isCompact

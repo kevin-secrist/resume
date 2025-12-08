@@ -33,7 +33,9 @@ docker run -v $PWD:/data -w /data/src latex-build ./build.sh
 
 # CI/CD
 
-This repo is set up to automatically build PRs, and release the newly built artifacts on merge to `main`. See [.github](.github) for the workflow definitions. New docker images are only built/pushed in PRs if the `Dockerfile` differs from what's in the `main` branch, allowing for a quick dev cycle when not developing locally (like when making changes directly in GitHub - this repo is for a document after all).
+This repo is set up to automatically build PRs, and release the newly built artifacts on merge to `main`. See [.github](.github) for the workflow definitions.
+
+Docker images are rebuilt only when the `Dockerfile` changes, speeding up PR builds. Weekly scheduled builds keep dependencies current.
 
 # Screenshot
 
