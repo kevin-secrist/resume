@@ -1,12 +1,33 @@
 # Technical Reference for AI Agents
 
-This document provides comprehensive technical context for AI agents working on this LaTeX resume project. It focuses on generic, broadly useful information about the build system, template, and CI/CD infrastructure.
+This document provides quick orientation for AI agents working on this LaTeX resume project. For detailed technical information, see the linked guides in the `docs/` folder.
 
-**IMPORTANT**: When making changes to the build system, CI/CD pipeline, template customization, or project structure, update this document to reflect those changes. Keep it accurate and in sync with the actual codebase.
+**IMPORTANT**: When making changes to the build system, CI/CD pipeline, template customization, or project structure, update this document and the relevant guides in `docs/` to reflect those changes.
 
-## Project Architecture
+## Developer Profile
 
-### Directory Structure
+This project is personalized for an individual, and whenever making changes to **content** make sure to reference [PROFILE.md](PROFILE.md). If that file does not exist (it is .gitignored and does not come with a fresh clone) then interview the user to develop that file before making significant content changes.
+
+Things that should generally be included in PROFILE.md:
+
+* Candidate Profile: biographical info/context, some examples:
+  * Current title/Role
+  * Years of experience
+  * Current/most proficient tech stack
+  * Team composition
+* Strategic Goals: what the individual is trying to achieve with their resume/career.
+* Strengths: themes that should be woven into the document that reflect the individual's strengths.
+
+## Quick Project Overview
+
+LaTeX-based resume/CV system with:
+- Docker-based build (no local LaTeX installation required)
+- Modular section files for easy maintenance
+- Conditional compilation (resume vs CV variants from single source)
+- Automated CI/CD with GitHub Actions
+- Semantic versioning embedded in PDFs
+
+## Directory Structure
 
 ```
 /
@@ -15,8 +36,13 @@ This document provides comprehensive technical context for AI agents working on 
 │   └── scheduled-build.yml # Weekly Docker image refresh
 ├── .devcontainer/          # VS Code dev container config
 ├── .vscode/                # VS Code LaTeX Workshop settings
+├── docs/                   # Documentation guides
+│   ├── resume-writing-guide.md  # MEDIC, ATS, bullet writing
+│   ├── template-guide.md        # LaTeX commands and customization
+│   ├── build-guide.md           # Build system and CI/CD details
+│   └── screenshot.png           # Dev environment example
 ├── src/                    # LaTeX source files
-│   ├── *.tex              # Document entry points (resume, CV, cover letter)
+│   ├── *.tex              # Document entry points (resume, CV)
 │   ├── yaac-another-awesome-cv.cls  # Template class definition
 │   ├── sections/          # Modular content sections
 │   ├── fonts/             # Local font files (Source Sans Pro)
@@ -28,249 +54,65 @@ This document provides comprehensive technical context for AI agents working on 
 └── README.md              # Human-focused documentation
 ```
 
+## Quick Start
+
+**Local development setup:** See [README.md](README.md#local-development-setup) for Docker and VS Code configuration.
+
+**Quick build via Docker CLI:**
+```bash
+docker build -t latex-build .
+docker run -v $PWD:/data -w /data/src latex-build ./build.sh
+```
+
+Artifacts appear in `src/out/*.pdf`.
+
+## Core Concepts
+
 ### Modular Section System
 
 Content is split into separate `.tex` files in `src/sections/`:
-- **Why**: Enables version control of individual sections, easier collaboration
+- **Why**: Version control individual sections, easier collaboration
 - **How**: Main document uses `\input{sections/filename}` to include sections
 - **When to edit**: Content changes happen in section files, not main document
-
-Build artifacts in `src/out/` are git-ignored but contain:
-- `.pdf` - Final compiled documents
-- `.log` - Compilation logs for debugging
-- `.aux`, `.fls`, `.out` - LaTeX auxiliary files
-- `.synctex.gz` - Editor source-to-PDF mapping for dev containers
-
-### Versioning Flow
-
-Git commit → Semantic versioning extraction → Environment variable `VERSION` → Footer in PDF
-
-## Build System
-
-### Compilation Stack
-
-**latexmk + LuaLaTeX workflow:**
-
-1. `latexmk` reads configuration from `latexmkrc` and magic comments in `.tex` files
-2. Executes LuaLaTeX engine with specific flags
-3. Automatically reruns compilation for cross-references
-4. Outputs to `src/out/` directory
-
-**Why LuaLaTeX over pdfLaTeX:**
-- Better Unicode support (required for special characters)
-- Access to Lua scripting (`\directlua` for environment variables)
-- Native system font loading via fontspec
-
-### Magic Comments
-
-Top of each `.tex` document:
-```latex
-% !TEX TS-program = latexmk
-% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error -lualatex -outdir=out
-```
-
-- `synctex=1`: Enables editor forward/inverse search (click PDF → jump to source)
-- `interaction=nonstopmode`: Non-interactive mode for CI/CD (doesn't pause on errors)
-- `file-line-error`: Error format includes file path and line number
-- `lualatex`: Specifies LuaLaTeX engine
-- `outdir=out`: Build artifacts go to `src/out/` subdirectory
 
 ### Conditional Compilation
 
 Three document variants from one codebase:
 
 ```latex
-\resumetrue   % Enables resume-specific content
-\cvtrue       % Enables CV-specific content
-\covertrue    % Enables cover letter-specific content
+\resumetrue   % In secrist-resume.tex - brief format
+\cvtrue       % In secrist-cv.tex - detailed format
+\covertrue    % In secrist-cover.tex - cover letter
 ```
 
-**Usage in content files:**
+Use in section files:
 ```latex
 \ifresume
-    Brief bullet point for resume
+    Brief content for resume
 \fi
 
 \ifcv
-    Detailed explanation for CV
+    Detailed content for CV
 \fi
-
-% Or inline:
-\resumeonly{Short version} \cvonly{Long version}
 ```
 
-**Why**: Maintain single source of truth, avoid content drift between variants
+Maintains single source of truth, prevents content drift.
 
-### Environment Variables
+### Template Customization
 
-```latex
-\getenv{VERSION}  % Access shell environment variables
-```
+Template: [yaac-another-awesome-cv](https://github.com/darwiin/yaac-another-awesome-cv)
 
-Used in footer to embed build version from CI/CD semantic versioning.
+For complete command reference, see [docs/template-guide.md](docs/template-guide.md).
 
-### Docker Build (Recommended)
+### Build System
 
-**Why Docker:**
-- Eliminates "works on my machine" - consistent LaTeX environment
-- Avoids complex TeX Live installation (~5GB)
-- CI/CD and local builds use identical toolchain
+**Stack:** latexmk + LuaLaTeX
+**Why Docker:** Consistent environment, no local TeX Live installation (~5GB)
+**Build artifacts:** `src/out/` directory (git-ignored)
 
-**When NOT to use Docker:**
-- You won't - native builds fail due to missing packages (intentional)
+For compilation details, magic comments, and troubleshooting, see [docs/build-guide.md](docs/build-guide.md).
 
-## LaTeX Template System (YAAC)
-
-**Template**: [yaac-another-awesome-cv](https://github.com/darwiin/yaac-another-awesome-cv)
-**File**: `src/yaac-another-awesome-cv.cls`
-
-### Document Class Options
-
-```latex
-\documentclass[localFont,alternative,compact]{yaac-another-awesome-cv}
-```
-
-**Options explained:**
-
-| Option | Purpose | When to use |
-|--------|---------|-------------|
-| `localFont` | Load fonts from `fonts/` directory instead of system fonts | Always (CI/CD environments lack font installation) |
-| `alternative` | Use alternate header layout with centered name | Current project uses this |
-| `compact` | Reduce vertical spacing between entries | When content exceeds 1-2 pages |
-| `10pt`/`11pt`/`12pt` | Font size | Not used (defaults to 10pt) |
-| `showLinks` | Display URLs in PDF | Only for print versions |
-| `green`/`red`/`indigo`/`orange`/`monochrome` | Accent color | Not used (defaults to blue) |
-
-### Essential Commands
-
-**Header/Contact Information:**
-```latex
-\name{First}{Last}
-\tagline{Professional title}
-\photo[circular]{2.5cm}{assets/profile.jpg}
-
-\socialinfo{
-    \email{address@domain.com}
-    \linkedin{username}
-    \github{username}
-    \smartphone{+1-555-1234}
-    \address{City, State}
-}
-```
-
-**Section Headers:**
-```latex
-\sectionTitle{Section Name}{\faIcon}
-% Example: \sectionTitle{Experience}{\faSuitcase}
-```
-- Uses FontAwesome 5 icons (`\fa` prefix)
-- Common icons: `\faSuitcase`, `\faGraduationCap`, `\faLaptop`, `\faTasks`
-
-**Experience Entries:**
-```latex
-\experience
-    {End Date}           % "Present", "Jan 2024", etc.
-    {Job Title}
-    {Company Name}
-    {Start Date}
-    {
-        Bullet point descriptions here.
-        Can use multiple paragraphs.
-    }
-    {Technology, Tags, Go, Here}
-```
-
-**Project Entries:**
-```latex
-\project
-    {Project Name}
-    {Date Range}
-    {URL or leave empty}
-    {Description of the project and impact}
-    {Tech, Stack, Listed, Here}
-```
-
-**Skills/Keywords:**
-```latex
-\begin{keywords}
-    \keywordsentry{Category}{Keyword1, Keyword2, Keyword3}
-    \keywordsentry{Languages}{JavaScript, Python, Go}
-\end{keywords}
-```
-
-**Technology Tags:**
-```latex
-\cvtag{Docker} \cvtag{Kubernetes} \cvtag{AWS}
-```
-- Renders as colored tags/badges in the output
-
-### Font System
-
-**Source Sans Pro** loaded from `src/fonts/`:
-- When `localFont` option: loads from local directory
-- Otherwise: uses system-installed fonts (not recommended)
-- Why: Consistent typography across all build environments
-
-### Common Gotchas
-
-1. **Missing `\emptySeparator`**: Add between entries to maintain spacing
-2. **Long bullet points**: Break into multiple shorter bullets for readability
-3. **Technology tags overflow**: Limit to 8-10 tags per entry
-4. **Icon not found**: Ensure FontAwesome 5 package installed, use `\fa` prefix
-
-## CI/CD Pipeline
-
-### main.yml Workflow
-
-**Triggers**: Pull requests, pushes to `main`
-
-**Three-job pipeline:**
-
-1. **build-docker**
-   - Checks if `Dockerfile` differs from `main` branch
-   - If changed: builds and pushes new image to GitHub Container Registry
-   - If unchanged: skips build, uses cached `latest` image
-   - **Why**: Speeds up PRs when only content changes (90% of commits)
-
-2. **build-documents** (depends on build-docker)
-   - Pulls Docker image (`ghcr.io/<owner>/latex:latest` or SHA-tagged)
-   - Extracts semantic version from git commits
-   - Runs `./build.sh` inside container
-   - Uploads PDFs and logs as GitHub artifacts
-   - **Environment**: `VERSION` variable passed to LaTeX for footer
-
-3. **release** (only on `main` branch)
-   - Downloads PDF artifacts
-   - Creates GitHub Release with semantic version tag (e.g., `v1.2.3`)
-   - Attaches PDFs to release
-   - Generates release notes from commits
-
-### scheduled-build.yml Workflow
-
-**Trigger**: Cron schedule (weekly, Tuesday 16:00 UTC)
-
-**Purpose**:
-- Rebuilds Docker image with latest TeX Live packages
-- Prevents dependency drift
-- Catches breaking changes early
-
-**When to modify**: If weekly is too frequent/infrequent
-
-### Docker Image Strategy
-
-**Registry**: GitHub Container Registry (GHCR)
-**Base image**: Ubuntu noble (LTS)
-**TeX Live**: 2025 with minimal `scheme-basic`
-
-**Selective package installation** (avoids 5GB full TeX Live):
-- Only installs packages actually used by template
-- See `Dockerfile` for full list
-
-**Caching**:
-- GitHub Actions Docker layer cache
-- Dramatically speeds up image rebuilds
-
-## Making Changes
+## Common Workflows
 
 ### Adding a New Section
 
@@ -285,53 +127,50 @@ Used in footer to embed build version from CI/CD semantic versioning.
    \input{sections/newsection}
    ```
 
-3. Test locally with dev container or Docker build
+3. Test with dev container or Docker build
 
-### Modifying Template Styles
+### Modifying Content
 
-**File**: `src/yaac-another-awesome-cv.cls`
+1. Edit files in `src/sections/`
+2. Use conditional compilation for resume vs CV variants
+3. Follow MEDIC framework for metrics (see [docs/resume-writing-guide.md](docs/resume-writing-guide.md))
+4. Build and verify PDF output
 
-**Common modifications:**
-- Line ~75: Geometry (margins, page size)
-- Line ~150-200: Color definitions
-- Line ~250-300: Section title formatting
-- Line ~400+: Environment definitions (experience, projects, etc.)
+### Testing Changes
 
-**Testing**: Build after each change, check PDF output
-
-### Testing Locally
-
-**Option 1: VS Code Dev Container** (recommended)
-- Open in VS Code
-- "Reopen in Container" prompt
+**VS Code Dev Container** (recommended):
+- Open in VS Code → "Reopen in Container"
 - Edit → Auto-build on save → PDF preview
-- Uses LaTeX Workshop extension
+- LaTeX Workshop extension provides IntelliSense
 
-**Option 2: Docker CLI**
+**Docker CLI**:
 ```bash
-docker build -t latex-build .
 docker run -v $PWD:/data -w /data/src latex-build ./build.sh
-open src/out/filename.pdf  # macOS
 ```
 
-**Option 3: Native LaTeX**
-- Don't. Missing packages will fail.
+## CI/CD Pipeline
 
-### Common Build Failures
+**Workflow:** `.github/workflows/main.yml`
 
-**Error: Missing package `foo.sty`**
-- Solution: Add package to `Dockerfile` via `tlmgr install foo`
-- Or: Use Docker instead of native build
+Three jobs:
+1. **build-docker** - Builds image if Dockerfile changed, otherwise uses cache
+2. **build-documents** - Compiles PDFs with semantic version from git commits
+3. **release** - Creates GitHub release with PDF attachments (main branch only)
 
-**Error: File not found**
-- Check path relative to `src/` directory
-- Ensure `\input{}` path doesn't include `src/` prefix
+**Weekly maintenance:** `scheduled-build.yml` rebuilds Docker image to keep dependencies current.
 
-**Error: Font not found**
-- Ensure `localFont` option used
-- Check `fonts/` directory contains `.otf` files
+For detailed pipeline documentation, see [docs/build-guide.md](docs/build-guide.md#cicd-pipeline).
 
-**PDF not generated:**
-- Check `src/out/*.log` for errors
-- Look for `! LaTeX Error:` lines
+## Documentation Guides
 
+- **[Resume Writing Guide](docs/resume-writing-guide.md)** - MEDIC framework, ATS optimization, bullet writing formulas, section ordering
+- **[Template Guide](docs/template-guide.md)** - LaTeX commands, document class options, font system, common gotchas
+- **[Build Guide](docs/build-guide.md)** - Compilation stack, Docker setup, CI/CD pipeline, troubleshooting
+
+## When to Update This Document
+
+- Adding/removing major sections or features
+- Changing directory structure
+- Modifying build system or CI/CD pipeline
+- Updating template commands or conventions
+- Adding new documentation guides

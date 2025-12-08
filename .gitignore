@@ -1,5 +1,6 @@
 out/
 .vscode-server/
+PROFILE.md
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
