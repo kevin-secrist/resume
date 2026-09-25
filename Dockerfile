@@ -5,15 +5,21 @@ RUN apt-get update \
 &&  rm -rf /var/lib/apt/lists/*
 
 ARG TEXLIVE_MIRROR=https://mirror.ctan.org/systems/texlive/tlnet
-ENV MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man" \
-    INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info" \
-    PATH="${PATH}:/usr/local/texlive/2025/bin/x86_64-linux"
+# Install to a year-independent path so new TeX Live releases don't break PATH
+ARG TEXLIVE_DIR=/usr/local/texlive
+ENV MANPATH="${TEXLIVE_DIR}/texmf-dist/doc/man" \
+    INFOPATH="${TEXLIVE_DIR}/texmf-dist/doc/info" \
+    PATH="${PATH}:${TEXLIVE_DIR}/bin/current"
 
 RUN mkdir /install-tl-unx \
 &&  curl -sSL \
       ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz \
     | tar -xzC /install-tl-unx --strip-components=1 \
     \
+&&  echo "TEXDIR ${TEXLIVE_DIR}" >> /install-tl-unx/texlive.profile \
+&&  echo "TEXMFLOCAL ${TEXLIVE_DIR}/texmf-local" >> /install-tl-unx/texlive.profile \
+&&  echo "TEXMFSYSVAR ${TEXLIVE_DIR}/texmf-var" >> /install-tl-unx/texlive.profile \
+&&  echo "TEXMFSYSCONFIG ${TEXLIVE_DIR}/texmf-config" >> /install-tl-unx/texlive.profile \
 &&  echo "tlpdbopt_autobackup 0" >> /install-tl-unx/texlive.profile \
 &&  echo "tlpdbopt_install_docfiles 0" >> /install-tl-unx/texlive.profile \
 &&  echo "tlpdbopt_install_srcfiles 0" >> /install-tl-unx/texlive.profile \
@@ -22,6 +28,7 @@ RUN mkdir /install-tl-unx \
 &&  /install-tl-unx/install-tl \
       -profile /install-tl-unx/texlive.profile \
       -repository ${TEXLIVE_MIRROR} \
+&&  ln -s ${TEXLIVE_DIR}/bin/* ${TEXLIVE_DIR}/bin/current \
 &&  rm -rf /install-tl-unx
 RUN tlmgr install --repository ${TEXLIVE_MIRROR} \
       latexmk \
