@@ -199,7 +199,9 @@
 
 %New length definition
 \newlength{\fulllength}
-\setlength{\fulllength}{17.3cm}
+% Derive from the text width, minus column padding (2 columns x 2 sides) and the
+% vertical rule, so two-column tables fit exactly instead of overflowing
+\setlength{\fulllength}{\dimexpr\textwidth-4\tabcolsep-\arrayrulewidth\relax}
 
 \newlength{\leftcolumnlength}
 \setlength{\leftcolumnlength}{2.4cm}
@@ -427,7 +429,7 @@
 \newenvironment{scholarship}{%
   \begin{tabular}{Y p{\rightcolumnlength}}
 }{%
-  \end{tabular}
+  \end{tabular}\ignorespacesafterend
 }
 
 % Render a scholarshipentry in the scolarship environment
