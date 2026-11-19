@@ -42,7 +42,7 @@ LaTeX-based resume/CV system with:
 │   ├── build-guide.md           # Build system and CI/CD details
 │   └── screenshot.png           # Dev environment example
 ├── src/                    # LaTeX source files
-│   ├── *.tex              # Document entry points (resume, CV)
+│   ├── *.tex              # Document entry points (resume, CV, cover letter)
 │   ├── yaac-another-awesome-cv.cls  # Template class definition
 │   ├── sections/          # Modular content sections
 │   ├── fonts/             # Local font files (Source Sans Pro)
@@ -50,6 +50,9 @@ LaTeX-based resume/CV system with:
 │   ├── build.sh           # Build script wrapper
 │   ├── latexmkrc          # latexmk configuration
 │   └── out/               # Build artifacts (git ignored)
+├── AGENTS.md              # This file: instructions for AI coding agents
+├── CLAUDE.md              # Symlink to AGENTS.md (read by Claude Code)
+├── PROFILE.md             # Candidate profile (git ignored, see above)
 ├── Dockerfile             # LaTeX build environment
 └── README.md              # Human-focused documentation
 ```
@@ -82,7 +85,7 @@ Three document variants from one codebase:
 ```latex
 \resumetrue   % In secrist-resume.tex - brief format
 \cvtrue       % In secrist-cv.tex - detailed format
-\covertrue    % In secrist-cover.tex - cover letter
+\covertrue    % In secrist-coverletter.tex - cover letter
 ```
 
 Use in section files:
