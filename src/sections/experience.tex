@@ -4,27 +4,62 @@
     {Current}       {Software Developer III}{Rackspace Technology | Public Cloud Platform \& Experience}
     {September 2023}{
                       \begin{itemize}
-                        \item Lead geographically distributed team of 12
-                              engineers while providing architectural guidance
-                              to 30-40 engineers across multiple teams and
-                              timezones, establishing cross-team standards for
+                        \item Led a geographically distributed team of up to
+                              12 engineers and provided architectural guidance
+                              to 30-40 engineers across teams and timezones,
+                              establishing cross-team standards for
                               microservice design, infrastructure-as-code, and
                               security compliance across 16+ critical
-                              applications.
+                              applications; now one of three senior engineers
+                              owning delivery and operations for all of them.
                         \item Founded and led end-to-end development of an
                               enterprise AI multi-agent automation platform,
                               owning architecture, full-stack delivery,
-                              infrastructure-as-code, guardrails, and security
-                              model. Includes workflows for cloud analysis and
-                              remediation; integrated enterprise data sources
-                              with MCP with per-source credential schemes and
-                              tenant-scoped routing. Now used as a mandatory
-                              research step by Sales before engaging customers.
+                              infrastructure-as-code, and security model,
+                              including guardrails governing AI access to
+                              credentials, customer data, and enterprise
+                              systems. Integrated enterprise data sources via
+                              MCP with per-source credential schemes and
+                              tenant-scoped routing. Now a mandatory research
+                              step for Sales before engaging customers.
+                        \ifresume
+                        \item Use Claude Code throughout the development
+                              lifecycle, from requirements analysis and
+                              implementation through testing, debugging,
+                              refactoring, code review, and documentation.
+                              Built a steering-rules toolkit that compiles a
+                              shared library of agent instructions into formats
+                              Claude Code and Codex consume natively, and
+                              invested in rigorous end-to-end testing and
+                              high-velocity CI/CD so verification keeps pace
+                              with AI-accelerated change.
+                        \fi
+                        \ifcv
+                        \item Use Claude Code throughout the development
+                              lifecycle, from requirements analysis and
+                              implementation through testing, debugging,
+                              refactoring, code review, and documentation,
+                              backed by rigorous end-to-end testing and
+                              high-velocity CI/CD so verification keeps pace
+                              with AI-accelerated change.
+                        \item Built an agent-instructions toolkit: a
+                              structured library of steering rules with a build
+                              step that renders them into the layouts Claude
+                              Code and Codex load automatically, installed on
+                              developer machines via a bootstrap script.
+                        \fi
+                        \item Built an extensible PCI compliance automation
+                              framework for evidence collection, artifact
+                              generation, and audit submission with
+                              project-tracking integration, cutting audit
+                              effort 75\% and earning organizational
+                              recognition; AI-assisted authoring continually
+                              expands its coverage.
                         \item Serve as operations lead, mentoring on-call
                               engineers in incident response, root cause
-                              analysis, and production troubleshooting across
-                              tier-one applications supporting thousands of
-                              customer environments.
+                              analysis, and troubleshooting for tier-one
+                              applications serving thousands of customers.
+                        \ifcv
                         \item Own and maintain
                               \link{https://docs.rackspace.com/docs/watchman}{Watchman}
                               monitoring platform, processing thousands of
@@ -32,9 +67,8 @@
                               daily to enable rapid issue detection and
                               remediation by Rackspace support teams across
                               global infrastructure.
-                        \ifcv
                         \item Architected and deployed extensible multi-account
-                        AWS
+                              AWS
                               \link{https://aws.amazon.com/security-hub/}{Security Hub}
                               and
                               \link{https://aws.amazon.com/guardduty/}{GuardDuty}

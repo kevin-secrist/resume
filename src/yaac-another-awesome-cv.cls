@@ -70,7 +70,7 @@
 \RequirePackage[utf8]{luainputenc}
 \RequirePackage{fontspec}          % for loading fonts
 \RequirePackage{url,parskip}       % other packages for formatting
-\RequirePackage[usenames,dvipsnames]{xcolor}
+\RequirePackage[dvipsnames]{xcolor}
 \RequirePackage{fullpage}
 \RequirePackage[margin=1.5cm]{geometry}
 \RequirePackage[fixed]{fontawesome5}
@@ -199,7 +199,9 @@
 
 %New length definition
 \newlength{\fulllength}
-\setlength{\fulllength}{17.3cm}
+% Derive from the text width, minus column padding (2 columns x 2 sides) and the
+% vertical rule, so two-column tables fit exactly instead of overflowing
+\setlength{\fulllength}{\dimexpr\textwidth-4\tabcolsep-\arrayrulewidth\relax}
 
 \newlength{\leftcolumnlength}
 \setlength{\leftcolumnlength}{2.4cm}
@@ -331,25 +333,26 @@
   }
 }
 
-\newcommand\idphoto{
-	\ifthenelse{\equal{\@photoshape}{square}}{
+% Line ends are commented out so no stray spaces follow the photo, which fills
+% its minipage exactly and would otherwise spill onto an empty second line
+\newcommand\idphoto{%
+	\ifthenelse{\equal{\@photoshape}{square}}{%
 		% Draw square photo
-		\tikz\path[fill overzoom image={\@photo}]rectangle(\linewidth,\linewidth);
-	}{
-		\ifthenelse{\equal{\@photoshape}{roundedsquare}}{
+		\tikz\path[fill overzoom image={\@photo}]rectangle(\linewidth,\linewidth);%
+	}{%
+		\ifthenelse{\equal{\@photoshape}{roundedsquare}}{%
 			% Draw square photo with rounded corners
-			\tikz\path[fill overzoom image={\@photo}][rounded corners=2mm]rectangle(\linewidth,\linewidth);
-		}{
-			\ifthenelse{\equal{\@photoshape}{squircle}}{
+			\tikz\path[fill overzoom image={\@photo}][rounded corners=2mm]rectangle(\linewidth,\linewidth);%
+		}{%
+			\ifthenelse{\equal{\@photoshape}{squircle}}{%
 				% Draw squircle photo
-				\tikz\path[fill overzoom image={\@photo}][rounded corners=8mm]rectangle(\linewidth,\linewidth);
-				}{
+				\tikz\path[fill overzoom image={\@photo}][rounded corners=8mm]rectangle(\linewidth,\linewidth);%
+				}{%
 					% Draw circular photo
-					\tikz\path[fill overzoom image={\@photo}]circle[radius=0.5\linewidth];
-				}
-		}
-
-	}
+					\tikz\path[fill overzoom image={\@photo}]circle[radius=0.5\linewidth];%
+				}%
+		}%
+	}%
 }
 
 % Define social entries to print in header
@@ -427,7 +430,7 @@
 \newenvironment{scholarship}{%
   \begin{tabular}{Y p{\rightcolumnlength}}
 }{%
-  \end{tabular}
+  \end{tabular}\ignorespacesafterend
 }
 
 % Render a scholarshipentry in the scolarship environment
