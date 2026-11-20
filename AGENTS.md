@@ -31,9 +31,11 @@ LaTeX-based resume/CV system with:
 
 ```
 /
-├── .github/workflows/       # CI/CD automation
-│   ├── main.yml            # Build, test, release pipeline
-│   └── scheduled-build.yml # Weekly Docker image refresh
+├── .github/
+│   ├── dependabot.yml      # Monthly grouped GitHub Actions version bumps
+│   └── workflows/          # CI/CD automation
+│       ├── main.yml        # Build, test, release pipeline
+│       └── scheduled-build.yml # Weekly Docker image refresh
 ├── .devcontainer/          # VS Code dev container config
 ├── .vscode/                # VS Code LaTeX Workshop settings
 ├── docs/                   # Documentation guides
@@ -160,7 +162,7 @@ Three jobs:
 2. **build-documents** - Compiles PDFs with semantic version from git commits
 3. **release** - Creates GitHub release with PDF attachments (main branch only)
 
-**Weekly maintenance:** `scheduled-build.yml` rebuilds Docker image to keep dependencies current.
+**Weekly maintenance:** `scheduled-build.yml` rebuilds the Docker image to pick up the latest Ubuntu packages and TeX Live (also runnable manually via `workflow_dispatch`). Dependabot (`.github/dependabot.yml`) opens one grouped PR per month for GitHub Actions version bumps.
 
 For detailed pipeline documentation, see [docs/build-guide.md](docs/build-guide.md#cicd-pipeline).
 

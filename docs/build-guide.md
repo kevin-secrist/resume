@@ -68,11 +68,21 @@ docker run -v $PWD:/data -w /data/src latex-build ./build.sh
 
 ### scheduled-build.yml
 
-**Trigger:** Weekly (Tuesday 16:00 UTC)
+**Trigger:** Weekly (Tuesday 16:00 UTC), or manually via `workflow_dispatch`
 
 **Purpose:**
 - Rebuilds Docker image with latest TeX Live
 - Prevents dependency drift
+
+### Dependabot
+
+**Config:** `.github/dependabot.yml`
+
+- Ecosystem: `github-actions` only, checked monthly (1st of the month)
+- All action bumps grouped into one PR, commit prefix `chore(ci)`
+- 7-day `cooldown`: a release must be a week old before it is proposed
+- Workflows pin actions to full commit SHAs with a `# vX.Y.Z` comment; Dependabot updates both the SHA and the comment. When adding a new action, pin it the same way
+- The Dockerfile is not tracked: `FROM ubuntu:noble` is a codename tag Dependabot can't version-compare, and TeX Live is installed from CTAN at build time. The weekly `scheduled-build.yml` rebuild handles freshness instead.
 
 ### Docker Images
 
